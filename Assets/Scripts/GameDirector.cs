@@ -31,6 +31,7 @@ public class GameDirector : MonoBehaviour
     {
         rerollButText = rerollButton.GetComponentInChildren<Text>();
         defaultString = rerollButText.text;
+        playerTurn = 0;
     }
 
     public IEnumerator Dobon()
@@ -49,15 +50,13 @@ public class GameDirector : MonoBehaviour
 
         dobonText.SetActive(false);
         diceManager.resultButton.gameObject.SetActive(false);
-        diceManager.gameObject.SetActive(false);
+        diceManager.Slide();
 
         NextTurn();
     }
 
     public void NextTurn()
     {
-
-
         Debug.Log("TurnEnd,NextTurn");
 
         playerTurn++;

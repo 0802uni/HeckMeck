@@ -21,7 +21,10 @@ public class TileManager : MonoBehaviour
 
     private void Update()
     {
-        currentPlayer = gameDirector.players[gameDirector.playerTurn];
+        if (gameDirector.players.Count > 0)
+        {
+            currentPlayer = gameDirector.players[gameDirector.playerTurn];
+        }
     }
 
     internal void PermitToGet(int sum)
@@ -30,7 +33,7 @@ public class TileManager : MonoBehaviour
         {
             return;
         }
-        foreach (var t in tiles.Where(t => t.num <= sum&&t.isSlectable))
+        foreach (var t in tiles.Where(t => t.num <= sum && t.isSlectable))
         {
             t.buttonCompornent.interactable = true;
         }

@@ -20,12 +20,12 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        gameDirector = GameObject.Find("GameDirector").GetComponent<GameDirector>();
-        playerBoard = GameObject.Find("PlayerBoard");
-        gameDirector.players.Add(this);
     }
     private void Start()
     {
+        gameDirector = GameObject.Find("GameDirector").GetComponent<GameDirector>();
+        playerBoard = GameObject.Find("PlayerBoard");
+        gameDirector.players.Add(this);
         playerName.text = myName;
         this.transform.SetParent(playerBoard.transform,false);
     }

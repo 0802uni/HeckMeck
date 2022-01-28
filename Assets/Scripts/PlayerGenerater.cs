@@ -13,9 +13,8 @@ public class PlayerGenerater : MonoBehaviour
 
     GameObject parentObject;
 
-    GameObject playerPrefab;
-
-    List<string> playerNames;
+    [SerializeField]
+    GameStart gameStart;
 
     [SerializeField]
     GameObject playerNumInput;
@@ -26,12 +25,11 @@ public class PlayerGenerater : MonoBehaviour
     [SerializeField]
     Button startButton;
 
-    public void DecideNum()
+    public void DecideNum(InputField num)
     {
-        var num = playerNumInput.GetComponentInChildren<InputField>().text;
         parentObject = playerNumInput.transform.parent.gameObject;
 
-        playerNum = int.Parse(num);
+        playerNum = int.Parse(num.text);
 
         playerNumInput.SetActive(false);
 
@@ -49,18 +47,9 @@ public class PlayerGenerater : MonoBehaviour
     {
         foreach (var n in playerNameInputs)
         {
-            playerNames.Add(n.text);
+            gameStart.playerNames.Add(n.text);
         }
 
-        DontDestroyOnLoad(this);
-        SceneManager.LoadScene("MainScene");
-
-        GameObject playerBoard = GameObject.Find("PlayerBoard");
-
-        foreach (var n in playerNames)
-        {
-            var p = Instantiate(playerPrefab);
-            p.GetComponent<Player>().myName = n;
-        }
+        gameStart.OffLineStart();
     }
 }

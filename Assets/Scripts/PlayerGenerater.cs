@@ -22,7 +22,7 @@ public class PlayerGenerater : MonoBehaviour
 
 
     [SerializeField]
-    List<GameObject> playerNameInputs;
+    List<GameObject> playerNameInputs=new List<GameObject>();
 
     [SerializeField]
     Button startButton;
@@ -68,7 +68,7 @@ public class PlayerGenerater : MonoBehaviour
     {
         foreach (var n in playerNameInputs)
         {
-            gameStart.playerNames.Add(n.GetComponent<InputField>().text);
+            gameStart.playerNames.Add(n.GetComponentInChildren<InputField>().text);
         }
 
         gameStart.OffLineStart();

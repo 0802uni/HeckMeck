@@ -18,9 +18,6 @@ public class Player : MonoBehaviour
     GameDirector gameDirector;
     GameObject playerBoard;
 
-    private void Awake()
-    {
-    }
     private void Start()
     {
         gameDirector = GameObject.Find("GameDirector").GetComponent<GameDirector>();

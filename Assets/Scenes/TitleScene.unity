@@ -1417,6 +1417,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNames: []
   playerPrefab: {fileID: 2144956280948686154, guid: 5d90951b378518f4f9bddf3ad8e35763, type: 3}
+  charas:
+  - image: {fileID: 21300000, guid: 7c4b74db06ea19d4c8a1a55845f7c5c9, type: 3}
+    yet: 0
+  - image: {fileID: 21300000, guid: e9466ee51cb84be439fc14d0be31aa69, type: 3}
+    yet: 0
+  - image: {fileID: 21300000, guid: 2790b6b72f7e75b48ae43df843933e37, type: 3}
+    yet: 0
+  - image: {fileID: 21300000, guid: 3b1a97f5a3869084ebd5f4f4cf813e65, type: 3}
+    yet: 0
+  - image: {fileID: 21300000, guid: d376af261b1160048abdd5e97bc2866f, type: 3}
+    yet: 0
+  - image: {fileID: 21300000, guid: a88ed74fa6d39a2498ab7a3da569f303, type: 3}
+    yet: 0
 --- !u!4 &1031857672
 Transform:
   m_ObjectHideFlags: 0

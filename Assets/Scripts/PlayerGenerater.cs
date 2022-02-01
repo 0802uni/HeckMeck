@@ -27,6 +27,7 @@ public class PlayerGenerater : MonoBehaviour
     [SerializeField]
     Button startButton;
 
+
     public void StandUp()
     {
         gameObject.SetActive(true);

@@ -10,7 +10,7 @@ public class Tile : MonoBehaviour
     [SerializeField]
     public int num;
     [SerializeField]
-    int point;
+    public int point;
     
     [SerializeField]
     public bool isSlectable;

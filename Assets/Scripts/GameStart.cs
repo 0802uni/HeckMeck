@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
+using Random = UnityEngine.Random;
+using System.Linq;
 
 public class GameStart : MonoBehaviour
 {
@@ -9,6 +12,8 @@ public class GameStart : MonoBehaviour
 
     [SerializeField]
     GameObject playerPrefab;
+
+    public List<chara> charas;
 
     public void OffLineStart()
     {
@@ -26,6 +31,17 @@ public class GameStart : MonoBehaviour
         {
             var p = Instantiate(playerPrefab);
             p.GetComponent<Player>().myName = n;
+
+            var sortedChara = charas.Where(n => !n.yet).ToList();
+            var c = sortedChara[Random.Range(0, sortedChara.Count)];
+            p.GetComponent<Player>().chara = c.image;
+            c.yet = true;
         }
+    }
+    [Serializable]
+    public class chara
+    {
+        public Sprite image;
+        public bool yet;
     }
 }

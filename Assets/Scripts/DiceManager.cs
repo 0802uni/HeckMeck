@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using System.Linq;
+using DG.Tweening;
 
 //サイコロを並べるパネル。
 //サイコロに関する外交的なイベントを扱う
@@ -27,11 +28,27 @@ public class DiceManager : MonoBehaviour
     [SerializeField]
     GameDirector gameDirector;
 
+    RectTransform rect;
+    bool isSet;
+
     private void Awake()
     {
         //gameObject.SetActive(false);
         resultButton.gameObject.SetActive(false);
         resultButton.onClick.AddListener(Result);
+
+        rect = GetComponent<RectTransform>();
+        isSet = false;
+    }
+
+    public void Slide()
+    {
+        var pos = rect.localPosition;
+
+        pos.x = (isSet) ? -rect.sizeDelta.x : 0;
+        isSet = !isSet;
+
+        rect.DOLocalMove(pos, 0.1f);
     }
 
     public void Reload()
@@ -117,7 +134,8 @@ public class DiceManager : MonoBehaviour
         sumCalc.text = sum.ToString();
 
         resultButton.gameObject.SetActive(false);
-        gameObject.SetActive(false);
+
+        Slide();
 
         tileManager.PermitToGet(sum);
     }

@@ -93,6 +93,7 @@ public class GameDirector : MonoBehaviour
         {
             gameSet.playerDatas.Add(new GameSet.PlayerData());
 
+            gameSet.playerDatas.Last().image = p.chara;
             gameSet.playerDatas.Last().name = p.myName;
             gameSet.playerDatas.Last().tileCount = p.ownedTiles.Count;
             gameSet.playerDatas.Last().tilePoint = p.ownedTiles.Sum(n => n.point);
@@ -100,10 +101,10 @@ public class GameDirector : MonoBehaviour
 
         gameSetText.transform.DOLocalMoveX(0, 0.5f);
 
-        StartCoroutine(ToRecord());
+        StartCoroutine(DataLoadWaiting());
     }
 
-    public IEnumerator ToRecord()
+    public IEnumerator DataLoadWaiting()
     {
         yield return new WaitForSeconds(2);
 

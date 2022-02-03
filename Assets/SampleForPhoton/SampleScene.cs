@@ -26,8 +26,9 @@ public class SampleScene : MonoBehaviourPunCallbacks
     {
         // ランダムな座標に自身のアバター（ネットワークオブジェクト）を生成する
         var ob = PhotonNetwork.Instantiate("Avatar", canvas.GetComponent<RectTransform>().position, Quaternion.identity);
-        ob.GetComponent<RectTransform>().localPosition = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100));
-
+        
         ob.transform.parent = canvas.transform;
+        ob.GetComponent<RectTransform>().localPosition = new Vector3(Random.Range(-100,100 ), Random.Range(-100, 100));
+
     }
 }

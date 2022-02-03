@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 using System;
 using Random = UnityEngine.Random;
 using System.Linq;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class GameStart : MonoBehaviour
 {

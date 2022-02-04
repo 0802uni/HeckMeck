@@ -34,12 +34,11 @@ public class OnLineStart : MonoBehaviourPunCallbacks
     {
         yield return null;
 
-        var parent = GameObject.Find("PlayerUIParent");
-        
         var player = PhotonNetwork.Instantiate("PlayerUI",new Vector3(0, 0, 0), Quaternion.identity)
             .GetComponent<OnlinePlayer>();
-        
-        player.gameObject.transform.SetParent(parent.transform, false);
+
+        Debug.Log("player参上");
+
         player.myName = playerName;
     }
 }

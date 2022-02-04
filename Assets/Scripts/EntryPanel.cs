@@ -25,8 +25,7 @@ public class EntryPanel : MonoBehaviour
 
     public void NameInput()
     {
-        onLineStart.playerName = eN.GetComponentInChildren<InputField>().
-            gameObject.GetComponentInChildren<Text>().text;
+        onLineStart.playerName = eN.GetComponentInChildren<InputField>().text;
         Destroy(eN);
         eR = Instantiate(entryRoom, this.transform);
         eR.GetComponentInChildren<Button>().onClick.AddListener(RoomInput);
@@ -34,8 +33,7 @@ public class EntryPanel : MonoBehaviour
 
     public void RoomInput()
     {
-        onLineStart.roomName = eR.GetComponentInChildren<InputField>().
-            gameObject.GetComponentInChildren<Text>().text;
+        onLineStart.roomName = eR.GetComponentInChildren<InputField>().text;
         onLineStart.GameStart();
     }
 
@@ -43,7 +41,10 @@ public class EntryPanel : MonoBehaviour
     {
         foreach (Transform n in gameObject.transform)
         {
-            Destroy(n.gameObject);
+            if (n.gameObject.name!="CloseBut")
+            {
+                Destroy(n.gameObject);
+            }
         }
         gameObject.SetActive(false);
     }

@@ -1090,8 +1090,8 @@ MonoBehaviour:
   sumCalc: {fileID: 121805138}
   tileManager: {fileID: 967711978}
   gameDirector: {fileID: 2048612129}
-  pipBugRate: 4
-  Pip5Rate: 6
+  pipBugRate: 6
+  Pip5Rate: 7
   PipOtherRate: 9
 --- !u!114 &337064226
 MonoBehaviour:

@@ -31,6 +31,13 @@ public class DiceManager : MonoBehaviour
     RectTransform rect;
     bool isSet;
 
+    [SerializeField, Range(1, 9)]
+    public int pipBugRate;
+    [SerializeField, Range(1, 9)]
+    public int Pip5Rate;
+    [SerializeField, Range(1, 9)]
+    public int PipOtherRate;
+
     private void Awake()
     {
         //gameObject.SetActive(false);
@@ -72,10 +79,12 @@ public class DiceManager : MonoBehaviour
 
     public void Roll()
     {
-        foreach (var d in dices.Where(d => d.isRollable))
-        {
-            d.Roll();
-        }
+
+            foreach (var d in dices.Where(d => d.isRollable))
+            {
+                d.Roll();
+            }
+
 
         if (dices.All(n => n.diceData.isSelectAlready))
         {
@@ -116,7 +125,7 @@ public class DiceManager : MonoBehaviour
         //既に選んだ目は帰される
         if (dices.Find(n => n.isSelected && n.diceData.isSelectAlready)) return;
         //選んだ目の種類を選択済みにする
-        dices.First(n => n.isSelected&&n.isSlectable).diceData.isSelectAlready = true;
+        dices.First(n => n.isSelected && n.isSlectable).diceData.isSelectAlready = true;
         //出現したボタンを押すと下部のパネルにサイコロが移動する
         foreach (var d in dices.Where(n => n.isSelected && n.isSlectable))
         {

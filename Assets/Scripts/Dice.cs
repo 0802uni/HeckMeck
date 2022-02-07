@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System.Linq;
 
 
 //サイコロのオブジェクトにアタッチ
@@ -10,7 +12,7 @@ public class Dice : MonoBehaviour
 {
     [SerializeField]
     public DiceData diceData;
-    
+
     [SerializeField]
     public bool isRollable;
     [SerializeField]
@@ -21,10 +23,37 @@ public class Dice : MonoBehaviour
     DiceManager diceManager;
     public Button buttonComponent;
 
+    List<int> rollList = new List<int>();
+
+    const int bugs = 5;
+    const int five = 4;
+    const int four = 3;
+    const int three = 2;
+    const int two = 1;
+    const int one = 0;
+
     private void Awake()
     {
         diceManager = gameObject.transform.parent.GetComponent<DiceManager>();
         buttonComponent = gameObject.GetComponent<Button>();
+
+        for (int i = 0; i < diceManager.pipBugRate; i++)
+        {
+            rollList.Add(bugs);
+        }
+        for (int i = 0; i < diceManager.Pip5Rate; i++)
+        {
+            rollList.Add(five);
+        }
+        for (int i = 0; i < diceManager.PipOtherRate; i++)
+        {
+            rollList.Add(four);
+            rollList.Add(three);
+            rollList.Add(two);
+            rollList.Add(one);
+        }
+
+        Debug.Log(string.Join(",", rollList.Select(n => n.ToString())));
     }
 
     private void Start()
@@ -48,8 +77,8 @@ public class Dice : MonoBehaviour
     public void Roll()
     {
         //ランダムなインデックスを作成し、マネージャーのサイコロの大元の情報配列から引き出す
-        int randomIndex = UnityEngine.Random.Range(0, 6);
-        diceData = diceManager.diceDatas[randomIndex];
+        int randomIndex = Random.Range(0, rollList.Count);
+        diceData = diceManager.diceDatas[rollList[randomIndex]];
         isRollable = false;
         buttonComponent.interactable = true;
     }

@@ -34,6 +34,11 @@ public class GameDirector : MonoBehaviour
     [SerializeField]
     GameObject gameSetText;
 
+    [SerializeField]
+    Sprite dobonImage;
+
+    public float flipSpeed;
+
     private void Awake()
     {
         rerollButText = rerollButton.GetComponentInChildren<Text>();
@@ -47,12 +52,7 @@ public class GameDirector : MonoBehaviour
 
         dobonText.SetActive(true);
 
-        //playerに所有されていない中で最大のタイルの画像
-        tileManager.tiles.Where(n => !n.isOwned && n.isSlectable).
-            Last().GetComponent<Image>().sprite = null;
-        //playerに所有されていない中で最大のタイルの選択可否
-        tileManager.tiles.Where(n => !n.isOwned && n.isSlectable).
-            Last().isSlectable = false;
+        StartCoroutine(FlipTile());
 
         yield return new WaitForSeconds(2);
 
@@ -61,6 +61,32 @@ public class GameDirector : MonoBehaviour
         diceManager.Slide();
 
         NextTurn();
+    }
+
+    public IEnumerator FlipTile()
+    {
+        GameObject missingTile = tileManager.tiles.Where(n => !n.isOwned && n.isSlectable).Last().gameObject;
+
+        float angle = 0;
+
+        while (angle < 90)
+        {
+            angle += flipSpeed * Time.deltaTime;
+            missingTile.transform.eulerAngles = new Vector3(0, angle, 0);
+            yield return null;
+        }
+
+        missingTile.GetComponent<Image>().sprite = dobonImage;
+        missingTile.GetComponent<Tile>().isSlectable = false;
+
+        while (angle < 0)
+        {
+            angle -= flipSpeed * Time.deltaTime;
+            missingTile.transform.eulerAngles = new Vector3(0, angle, 0);
+            yield return null;
+        }
+
+        missingTile.transform.eulerAngles = Vector3.zero;
     }
 
     public void NextTurn()
@@ -109,5 +135,5 @@ public class GameDirector : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         gameSet.Record();
-    } 
+    }
 }

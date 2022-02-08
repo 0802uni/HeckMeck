@@ -38,6 +38,8 @@ public class DiceManager : MonoBehaviour
     [SerializeField, Range(1, 9)]
     public int PipOtherRate;
 
+    const int bugDice = 6;
+
     private void Awake()
     {
         //gameObject.SetActive(false);
@@ -80,26 +82,43 @@ public class DiceManager : MonoBehaviour
     public void Roll()
     {
 
-            foreach (var d in dices.Where(d => d.isRollable))
-            {
-                d.Roll();
-            }
+        foreach (var d in dices.Where(d => d.isRollable))
+        {
+            d.Roll();
+        }
 
 
         if (dices.All(n => n.diceData.isSelectAlready))
         {
-            Debug.Log("Dobon");
+            Debug.Log("Dobon：取得済みの数しかない");
             StartCoroutine(gameDirector.Dobon());
             return;
         }
 
-        if (dices.Where(n => n.isSlectable).Distinct().Count() == 1
-            && dices.First().diceData.typeData != 6 && !diceDatas.Last().isSelectAlready)
+        //Distinctの拡張メソッド出力テスト
+        //typeDataを元に一意の配列数を取得
+        var dist = dices.Where(n => n.isSlectable).Distinct(n=>n.diceData.typeData).Count();
+        Debug.Log(dist);
+
+
+        if (dices.Where(n => n.isSlectable).Distinct(n => n.diceData.typeData).Count() == 1)
         {
-            Debug.Log("Dobon");
-            StartCoroutine(gameDirector.Dobon());
-            return;
+            Debug.Log(dices.First().diceData.typeData);
+
+            if (dices.First().diceData.typeData != bugDice
+                && !diceDatas.First(n => n.typeData == bugDice).isSelectAlready)
+            {
+                Debug.Log("Dobon：最後の数が虫じゃない");
+                StartCoroutine(gameDirector.Dobon());
+                return;
+            }
         }
+
+        //if (dices.Where(n => n.isSlectable).Count() == 1
+        //    && dices.First().diceData.typeData == 6 && !diceDatas.Last().isSelectAlready)
+        //{
+
+        //}
     }
 
     public void DiceClick(Dice dice)

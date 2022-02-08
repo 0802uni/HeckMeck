@@ -18,6 +18,9 @@ public class TileManager : MonoBehaviour
 
     Player currentPlayer;
 
+    [SerializeField]
+    Color color;
+
 
     private void Update()
     {

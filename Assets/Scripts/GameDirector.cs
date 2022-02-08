@@ -67,6 +67,8 @@ public class GameDirector : MonoBehaviour
     {
         GameObject missingTile = tileManager.tiles.Where(n => !n.isOwned && n.isSlectable).Last().gameObject;
 
+        Debug.Log(missingTile.transform.eulerAngles);
+
         float angle = 0;
 
         while (angle < 90)

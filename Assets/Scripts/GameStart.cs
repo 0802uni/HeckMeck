@@ -32,11 +32,11 @@ public class GameStart : MonoBehaviour
         foreach (var n in playerNames)
         {
             var p = Instantiate(playerPrefab);
-            p.GetComponent<Player>().myName = n;
+            p.GetComponent<Player>().playerName = n;
 
             var sortedChara = charas.Where(n => !n.yet).ToList();
             var c = sortedChara[Random.Range(0, sortedChara.Count)];
-            p.GetComponent<Player>().chara = c.image;
+            p.GetComponent<Player>().characterSprite = c.image;
             c.yet = true;
         }
     }

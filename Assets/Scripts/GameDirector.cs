@@ -34,6 +34,11 @@ public class GameDirector : MonoBehaviour
     [SerializeField]
     GameObject gameSetText;
 
+    [SerializeField]
+    Sprite dobonSprite;
+
+    public float flipSpeed;
+
     private void Awake()
     {
         rerollButText = rerollButton.GetComponentInChildren<Text>();
@@ -43,16 +48,11 @@ public class GameDirector : MonoBehaviour
 
     public IEnumerator Dobon()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
 
         dobonText.SetActive(true);
 
-        //playerに所有されていない中で最大のタイルの画像
-        tileManager.tiles.Where(n => !n.isOwned && n.isSlectable).
-            Last().GetComponent<Image>().sprite = null;
-        //playerに所有されていない中で最大のタイルの選択可否
-        tileManager.tiles.Where(n => !n.isOwned && n.isSlectable).
-            Last().isSlectable = false;
+        StartCoroutine(FlipMissingTile());
 
         yield return new WaitForSeconds(2);
 
@@ -63,10 +63,39 @@ public class GameDirector : MonoBehaviour
         NextTurn();
     }
 
+    //非アクティブにするタイルを裏返す
+    public IEnumerator FlipMissingTile()
+    {
+        GameObject missingTile = tileManager.tiles.Where(n => !n.OwnedTile && n.FieldTile).Last().gameObject;
+
+        Debug.Log(missingTile.transform.eulerAngles);
+
+        float angle = 0;
+
+        while (angle < 90)
+        {
+            angle += flipSpeed * Time.deltaTime;
+            missingTile.transform.eulerAngles = new Vector3(0, angle, 0);
+            yield return null;
+        }
+
+        missingTile.GetComponent<Image>().sprite = dobonSprite;
+        missingTile.GetComponent<Tile>().FieldTile = false;
+        
+        while (angle < 0)
+        {
+            angle -= flipSpeed * Time.deltaTime;
+            missingTile.transform.eulerAngles = new Vector3(0, angle, 0);
+            yield return null;
+        }
+
+        missingTile.transform.eulerAngles = Vector3.zero;
+    }
+
     public void NextTurn()
     {
         //場に取得可能なタイルがなかった場合ゲームを終了させる
-        if (!tileManager.tiles.Any(n => !n.isOwned && n.isSlectable))
+        if (!tileManager.tiles.Any(n => !n.OwnedTile && n.FieldTile))
         {
             GameSet();
             return;
@@ -82,6 +111,7 @@ public class GameDirector : MonoBehaviour
         }
 
         tileManager.tiles.ForEach(n => n.buttonCompornent.interactable = false);
+        tileManager.tiles.ForEach(n => n.SelectableTile = false);
 
         diceManager.Reload();
         rerollButText.text = defaultString;
@@ -93,10 +123,10 @@ public class GameDirector : MonoBehaviour
         {
             gameSet.playerDatas.Add(new GameSet.PlayerData());
 
-            gameSet.playerDatas.Last().image = p.chara;
-            gameSet.playerDatas.Last().name = p.myName;
-            gameSet.playerDatas.Last().tileCount = p.ownedTiles.Count;
-            gameSet.playerDatas.Last().tilePoint = p.ownedTiles.Sum(n => n.point);
+            gameSet.playerDatas.Last().image = p.characterSprite;
+            gameSet.playerDatas.Last().name = p.playerName;
+            gameSet.playerDatas.Last().tileCount = p.playerTile.Count;
+            gameSet.playerDatas.Last().tilePoint = p.playerTile.Sum(n => n.point);
         }
 
         gameSetText.transform.DOLocalMoveX(0, 0.5f);
@@ -109,5 +139,5 @@ public class GameDirector : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         gameSet.Record();
-    } 
+    }
 }

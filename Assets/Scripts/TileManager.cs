@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 //タイルを内容する
 //タイルに関するイベントを行う
@@ -36,17 +37,38 @@ public class TileManager : MonoBehaviour
         {
             return;
         }
-        foreach (var t in tiles.Where(t => t.num <= sum && t.isSlectable))
+        foreach (var t in tiles.Where(t => t.num <= sum && t.FieldTile && !t.OwnedTile))
         {
             t.buttonCompornent.interactable = true;
+            t.SelectableTile = true;
+        }
+        //player側のタイルもsumと等しいものは取得可能になる
+        foreach (var ot in tiles.Where(t => t.num == sum && t.FieldTile && t.OwnedTile))
+        {
+            ot.buttonCompornent.interactable = true;
+            ot.SelectableTile = true;
         }
     }
 
     public void TileClick(Tile tile)
     {
-        currentPlayer.Owning(tile);
-        tile.isOwned = true;
+        if (tile.OwnedTile)
+        {
+            tile = Steel(tile);
+        }
+
+        currentPlayer.OwningTile(tile);
     }
 
-
+    private Tile Steel(Tile tile)
+    {
+        var steelTile = tiles.Find(n => n.num == tile.num);
+        var victim = tile.transform.parent.GetComponent<Player>();
+        if (victim.playerTile.Count > 1)
+        {
+            victim.playerTile.Where(n => !n.SelectableTile).Last().SelectableTile = true;
+        }
+        victim.playerTile.Remove(tile);
+        return steelTile;
+    }
 }

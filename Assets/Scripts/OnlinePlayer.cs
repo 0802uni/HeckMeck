@@ -43,7 +43,7 @@ public class OnlinePlayer : MonoBehaviour
         if (ownedTiles.Count > 0)
         {
             ownedTiles.Last().GetComponent<Button>().interactable = false;
-            ownedTiles.Last().isSlectable = false;
+            ownedTiles.Last().FieldTile = false;
         }
 
         ownedTiles.Add(tile);

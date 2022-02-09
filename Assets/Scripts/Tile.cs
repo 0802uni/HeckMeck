@@ -13,9 +13,12 @@ public class Tile : MonoBehaviour
     public int point;
     
     [SerializeField]
-    public bool isSlectable;
+    public bool FieldTile;//Dobon時に場から除外するため必要
     [SerializeField]
-    public bool isOwned;
+    public bool OwnedTile;//playerが取得した時に使用
+    [SerializeField]
+    public bool SelectableTile;//取得可能かどうかの判定に使用
+
 
     TileManager tileManager;
     
@@ -25,7 +28,7 @@ public class Tile : MonoBehaviour
     {
         tileManager = gameObject.transform.parent.GetComponent<TileManager>();
         buttonCompornent = gameObject.GetComponent<Button>();
-        isSlectable = true;
+        FieldTile = true;
     }
 
     private void Start()

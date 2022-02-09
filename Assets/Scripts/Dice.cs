@@ -22,8 +22,10 @@ public class Dice : MonoBehaviour
 
     DiceManager diceManager;
     public Button buttonComponent;
+    public Image diceImage;
 
-    List<int> rollList = new List<int>();
+    [HideInInspector]
+    public List<int> rollList = new List<int>();
 
     const int bugs = 5;
     const int five = 4;
@@ -35,7 +37,13 @@ public class Dice : MonoBehaviour
     private void Awake()
     {
         diceManager = gameObject.transform.parent.GetComponent<DiceManager>();
+        
         buttonComponent = gameObject.GetComponent<Button>();
+        diceImage = gameObject.GetComponent<Image>();
+
+        isRollable = true;
+        isSelected = false;
+        isSlectable = true;
 
         for (int i = 0; i < diceManager.pipBugRate; i++)
         {
@@ -52,20 +60,15 @@ public class Dice : MonoBehaviour
             rollList.Add(two);
             rollList.Add(one);
         }
-
-        Debug.Log(string.Join(",", rollList.Select(n => n.ToString())));
     }
 
     private void Start()
     {
-        //初期値＝１
-        diceData = diceManager.diceDatas[0];
-        isRollable = true;
-        isSelected = false;
-        isSlectable = true;
-
+        //Awake内だと代入されないので
         buttonComponent.onClick.AddListener(OnClick);
         buttonComponent.interactable = false;
+        //初期値＝１
+        diceData = diceManager.diceDatas[0];
     }
 
     private void Update()

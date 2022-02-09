@@ -168,11 +168,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825cf578cf316ca4a8b1f37d3b37c4b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: {fileID: 2144956283021398906}
-  myName: 
-  ownedTiles: []
-  chara: {fileID: 0}
-  image: {fileID: 1495758926262427966}
+  nameLabel: {fileID: 2144956283021398906}
+  playerName: 
+  playerTile: []
+  characterSprite: {fileID: 0}
+  characterImage: {fileID: 1495758926262427966}
 --- !u!114 &4215136517078939413
 MonoBehaviour:
   m_ObjectHideFlags: 0

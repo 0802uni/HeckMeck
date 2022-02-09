@@ -3,51 +3,53 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System.Collections;
+using System;
 
 
 //playerの持つタイルの情報を保持する
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    Text playerName;
+    Text nameLabel;
 
     [SerializeField]
-    public string myName;
+    public string playerName;
     [SerializeField]
-    public List<Tile> ownedTiles;
+    public List<Tile> playerTile;
 
     GameDirector gameDirector;
     GameObject playerBoard;
 
-    public Sprite chara;
+    public Sprite characterSprite;
     [SerializeField]
-    Image image;
+    Image characterImage;
 
     private void Start()
     {
         gameDirector = GameObject.Find("GameDirector").GetComponent<GameDirector>();
         playerBoard = GameObject.Find("PlayerBoard");
         gameDirector.players.Add(this);
-        playerName.text = myName;
-        image.sprite = chara;
+        nameLabel.text = playerName;
+        characterImage.sprite = characterSprite;
         this.transform.SetParent(playerBoard.transform, false);
     }
 
-    public void Owning(Tile tile)
+    public void OwningTile(Tile tile)
     {
-        if (ownedTiles.Count > 0)
+        if (playerTile.Count > 0)
         {
-            ownedTiles.Last().GetComponent<Button>().interactable = false;
-            ownedTiles.Last().isSlectable = false;
+            playerTile.Last().GetComponent<Button>().interactable = false;
+            playerTile.Last().FieldTile = false;
         }
 
-        ownedTiles.Add(tile);
+        tile.OwnedTile = true;
+        playerTile.Add(tile);
         tile.transform.SetParent(transform);
         tile.transform.position = transform.position;
 
-        var scoreSum = ownedTiles.Sum(n => n.point);
-        Debug.Log(myName + "　"
-            + "所持タイル数：" + ownedTiles.Count + "　"
+        var scoreSum = playerTile.Sum(n => n.point);
+        Debug.Log(playerName + "\n"
+            + "所持タイル数：" + playerTile.Count + "\n"
             + "ポイント合計：" + scoreSum);
 
         StartCoroutine(NextTurnDelay());

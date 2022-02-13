@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
     {
         gameDirector = GameObject.Find("GameDirector").GetComponent<GameDirector>();
         playerBoard = GameObject.Find("PlayerBoard");
-        gameDirector.players.Add(this);
         nameLabel.text = playerName;
         characterImage.sprite = characterSprite;
         this.transform.SetParent(playerBoard.transform, false);

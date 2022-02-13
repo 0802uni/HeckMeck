@@ -18,6 +18,8 @@ public class GameStart : MonoBehaviour
 
     public List<chara> charas;
 
+    public GameDirector gameDirector;
+
 void Update()
 {
     if (Input.GetKeyDown(KeyCode.Escape))
@@ -46,6 +48,8 @@ void Update()
     {
         yield return null;
 
+        gameDirector=GameObject.Find("GameDirector").GetComponent<GameDirector>();
+
         foreach (var n in playerNames)
         {
             var p = Instantiate(playerPrefab);
@@ -55,6 +59,8 @@ void Update()
             var c = sortedChara[Random.Range(0, sortedChara.Count)];
             p.GetComponent<Player>().characterSprite = c.image;
             c.yet = true;
+        gameDirector.players.Add(p.GetComponent<Player>());
+
         }
     }
     [Serializable]

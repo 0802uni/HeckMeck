@@ -471,7 +471,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 8025836000287102032}
   rank: {fileID: 8025835999897901556}
-  name: {fileID: 8025835999680073926}
+  playerName: {fileID: 8025835999680073926}
   tileCount: {fileID: 8025835999335531928}
   tilePoint: {fileID: 8025835999126428832}
   ri:

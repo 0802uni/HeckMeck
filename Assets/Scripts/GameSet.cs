@@ -34,7 +34,7 @@ public class GameSet : MonoBehaviour
         StartCoroutine(SceneChangeWaiting());
     }
 
-    List<PlayerData> rankList;
+    public List<PlayerData> rankList;
     GameObject parentObject;
 
     public IEnumerator SceneChangeWaiting()

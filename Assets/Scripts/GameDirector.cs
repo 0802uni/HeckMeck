@@ -57,7 +57,7 @@ public class GameDirector : MonoBehaviour
     }
 
     IEnumerator GameStartDelay(){
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.0f);
 
 defaultColor=players[playerTurn].GetComponent<Image>().color;
         players[playerTurn].GetComponent<Image>().color=Color.yellow;

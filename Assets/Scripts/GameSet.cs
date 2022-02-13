@@ -56,7 +56,7 @@ public class GameSet : MonoBehaviour
             var r = Instantiate(playerRecord, parentObject.transform).GetComponent<PlayerRecord>();
 
             r.image.sprite = p.image;
-            r.name.text = p.name;
+            r.playerName.text = p.name;
             r.tileCount.text = p.tileCount.ToString();
             r.tilePoint.text = p.tilePoint.ToString();
 

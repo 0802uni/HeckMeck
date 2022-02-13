@@ -7,7 +7,7 @@ public class PlayerRecord : MonoBehaviour
 {
     public Image image;
     public Text rank;
-    public Text name;
+    public Text playerName;
     public Text tileCount;
     public Text tilePoint;
 

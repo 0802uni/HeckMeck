@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System;
 using Random = UnityEngine.Random;
 using System.Linq;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -17,9 +18,25 @@ public class GameStart : MonoBehaviour
 
     public List<chara> charas;
 
+void Update()
+{
+    if (Input.GetKeyDown(KeyCode.Escape))
+    {
+        CloseWindow();
+    }
+}
+    public void CloseWindow(){
+            #if UNITY_EDITOR
+      UnityEditor.EditorApplication.isPlaying = false;
+    #elif UNITY_STANDALONE
+      UnityEngine.Application.Quit();
+    #endif
+    }
+
     public void OffLineStart()
     {
         DontDestroyOnLoad(this);
+
         SceneManager.LoadScene("MainScene");
 
         StartCoroutine(PlayerInstanceDelay());
@@ -46,4 +63,5 @@ public class GameStart : MonoBehaviour
         public Sprite image;
         public bool yet;
     }
+
 }

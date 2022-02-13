@@ -39,11 +39,29 @@ public class GameDirector : MonoBehaviour
 
     public float flipSpeed;
 
+    [SerializeField]
+    Text message;
+
+    Color defaultColor;
+
     private void Awake()
     {
         rerollButText = rerollButton.GetComponentInChildren<Text>();
         defaultString = rerollButText.text;
         playerTurn = 0;
+    }
+
+    private void Start()
+    {
+        StartCoroutine(GameStartDelay());
+    }
+
+    IEnumerator GameStartDelay(){
+        yield return new WaitForSeconds(1.5f);
+
+defaultColor=players[playerTurn].GetComponent<Image>().color;
+        players[playerTurn].GetComponent<Image>().color=Color.yellow;
+        message.text=players[playerTurn].playerName+"のターン";
     }
 
     public IEnumerator Dobon()
@@ -94,6 +112,8 @@ public class GameDirector : MonoBehaviour
 
     public void NextTurn()
     {
+        players[playerTurn].GetComponent<Image>().color=defaultColor;
+
         //場に取得可能なタイルがなかった場合ゲームを終了させる
         if (!tileManager.tiles.Any(n => !n.OwnedTile && n.FieldTile))
         {
@@ -109,6 +129,9 @@ public class GameDirector : MonoBehaviour
         {
             playerTurn = 0;
         }
+
+        players[playerTurn].GetComponent<Image>().color=Color.yellow;
+        message.text=players[playerTurn].playerName+"のターン";
 
         tileManager.tiles.ForEach(n => n.buttonCompornent.interactable = false);
         tileManager.tiles.ForEach(n => n.SelectableTile = false);

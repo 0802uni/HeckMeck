@@ -45,8 +45,11 @@ public class TileManager : MonoBehaviour
         //player側のタイルもsumと等しいものは取得可能になる
         foreach (var ot in tiles.Where(t => t.num == sum && t.FieldTile && t.OwnedTile))
         {
+            if (ot.transform.parent.GetComponent<Player>()!=currentPlayer)
+            {
             ot.buttonCompornent.interactable = true;
             ot.SelectableTile = true;
+            }
         }
     }
 

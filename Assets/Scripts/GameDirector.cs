@@ -44,6 +44,8 @@ public class GameDirector : MonoBehaviour
 
     Color defaultColor;
 
+    public AudioSource audioSource;
+
     private void Awake()
     {
         rerollButText = rerollButton.GetComponentInChildren<Text>();
@@ -68,6 +70,7 @@ defaultColor=players[playerTurn].GetComponent<Image>().color;
     {
         yield return new WaitForSeconds(1.5f);
 
+        audioSource.Play();
         dobonText.SetActive(true);
 
         StartCoroutine(FlipMissingTile());

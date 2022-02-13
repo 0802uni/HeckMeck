@@ -22,6 +22,8 @@ public class TileManager : MonoBehaviour
     [SerializeField]
     Color color;
 
+    public AudioSource audioSource;
+
 
     private void Update()
     {
@@ -55,6 +57,8 @@ public class TileManager : MonoBehaviour
 
     public void TileClick(Tile tile)
     {
+audioSource.Play();
+
         if (tile.OwnedTile)
         {
             tile = Steel(tile);

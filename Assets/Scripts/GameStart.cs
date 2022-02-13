@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Security.Cryptography.X509Certificates;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,6 +21,8 @@ public class GameStart : MonoBehaviour
 
     public GameDirector gameDirector;
 
+    public AudioSource audioSource;
+
 void Update()
 {
     if (Input.GetKeyDown(KeyCode.Escape))
@@ -38,6 +41,7 @@ void Update()
     public void OffLineStart()
     {
         DontDestroyOnLoad(this);
+        audioSource.Play();
 
         SceneManager.LoadScene("MainScene");
 
